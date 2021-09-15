@@ -1,9 +1,16 @@
+#include "get_next_line.h"
+
 char	*get_next_line(int fd)
 {
-	char	*tmp;
-	int		tmp_fd;
+	static void	*file;
+	static char	*line;
 
-	tmp_fd = fd;
-	tmp = 0;
-	return (tmp);
+	if (!line)
+	{
+		file = malloc(sizeof(char) * BUFFER_SIZE);
+	}
+	read(fd, file, BUFFER_SIZE);
+	line = file;
+
+	return (line);
 }

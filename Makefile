@@ -1,5 +1,5 @@
 CC		=	clang
-FLAGS	=	-Wall -Werror -Wextra
+FLAGS	=	-Wall -Werror -Wextra -g
 RM		=	rm -rf
 
 NAME	=	getnextline
