@@ -26,6 +26,13 @@ int	main(void)
 	printf("\n[START]\n");
 	line_content = get_next_line(fd);
 	printf("%s", line_content);
+	printf("|");
+	line_content = get_next_line(fd);
+	printf("%s", line_content);
+	printf("|");
+	line_content = get_next_line(fd);
+	printf("%s", line_content);
+	printf("|");
 	line_content = get_next_line(fd);
 	printf("%s", line_content);
 
