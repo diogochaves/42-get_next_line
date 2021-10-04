@@ -15,14 +15,14 @@ char	*get_next_line(int fd);
 
 /**
  * @brief Copies N bytes from memory area SRC to memory area DEST. The memory
- * areas must not overlap.
+ * areas may overlap.
  *
  * @param dest The pointer to the memory area DEST.
  * @param src The pointer to the memory area SCR.
  * @param n The quantity of bytes to copy.
  * @return A pointer to the memory area DEST.
  */
-void	*ft_memcpy(void *dest, const void *src, size_t n);
+void	*ft_memmove(void *dest, const void *src, size_t n);
 
 /**
  * @brief Calculates the length of the string pointed to by S, excluding the
