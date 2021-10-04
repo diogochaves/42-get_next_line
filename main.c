@@ -6,10 +6,10 @@
 
 int	main(void)
 {
-	int	fd;
-	char *line_content;
+	int		fd;
+	char	*line_content;
 
-	fd = open("loren.txt", O_RDONLY);
+	fd = open("test", O_RDONLY);
 
 	if (fd  == -1)
 	{
@@ -25,16 +25,13 @@ int	main(void)
 
 	printf("\n[START]\n");
 	line_content = get_next_line(fd);
-	printf("%s", line_content);
-	printf("|");
+	printf("->%s", line_content);
 	line_content = get_next_line(fd);
-	printf("%s", line_content);
-	printf("|");
+	printf("->%s", line_content);
 	line_content = get_next_line(fd);
-	printf("%s", line_content);
-	printf("|");
+	printf("->%s", line_content);
 	line_content = get_next_line(fd);
-	printf("%s", line_content);
+	printf("->%s", line_content);
 
 	printf("\n[END]\n");
 	return (0);
