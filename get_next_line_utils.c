@@ -10,23 +10,18 @@ size_t	ft_strlen(const char *s)
 	return (p - s);
 }
 
-void	*ft_memmove(void *dest, const void *src, size_t n)
+char	*ft_strchr(const char *s, int c)
 {
-	size_t	i;
+	while (*s && *s != (char)c)
+		s++;
+	if (*s == (char)c)
+		return ((char *)s);
+	return (0);
+}
 
-	i = 0;
-	if (dest > src)
-	{
-		while (n--)
-			((unsigned char *)dest)[n] = ((unsigned char *)src)[n];
-	}
-	else if (dest != src)
-	{
-		while (i < n)
-		{
-			((unsigned char *)dest)[i] = ((unsigned char *)src)[i];
-			i++;
-		}
-	}
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	while (n-- && dest != src)
+		((unsigned char *)dest)[n] = ((unsigned char *)src)[n];
 	return (dest);
 }

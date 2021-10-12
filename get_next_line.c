@@ -1,99 +1,70 @@
 #include "get_next_line.h"
 
 char	*get_line(int fd, char *buffer);
+char	*set_buffer(char *buffer, char *file, int digits);
+char	*get_buffer_line(char *buffer, char *eol);
 
 char	*get_next_line(int fd)
 {
 	static char	*buffer;
+	char		*line;
 
-	return (get_line(fd, buffer));
+	if (!buffer)
+	{
+		buffer = malloc(sizeof(char));
+		if (!buffer)
+			return (NULL);
+		buffer[0] = "\0";
+	}
+	line = get_line(fd, buffer);
+	if (!line)
+		free(buffer);
+	return (line);
 }
 
 char	*get_line(int fd, char *buffer)
 {
+	char	*eol;
 	char	*file;
 	char	*line;
-	size_t	i;
-	size_t	digits;
+	int		digits;
 
-	i = 0;
-	if (buffer)
-	{
-		digits = ft_strlen(buffer);
-		while (i < digits)
-		{
-			if (buffer[i] == '\n')
-				break ;
-			i++;
-		}
-		if (i < digits - 1)
-		{
-			line = malloc(i + 2);
-			ft_memmove(line, buffer, i + 1);
-			line[i + 1] = '\0';
-
-			if (i < digits - 1)
-			{
-				ft_memmove(buffer, buffer + i + 1, digits - i);
-				buffer[digits - i + 1] = '\0';
-			}
-
-			return (line);
-		}
-	}
-	i = 0;
 	file = malloc(BUFFER_SIZE);
-	digits = read(fd, file, BUFFER_SIZE);
-	if (!digits)
-		return (NULL);
-	while (i < BUFFER_SIZE && i < digits)
+	eol = ft_strchr(buffer, '\n');
+	while (!eol)
 	{
-		if (file[i] == '\n')
-			break ;
-		i++;
+		digits = read(fd, file, BUFFER_SIZE);
+		if (!digits)
+			return (NULL); // EOF - ToDo: FREE ptr
+		buffer = set_buffer(buffer, file, digits);
+		eol = ft_strchr(buffer, '\n');
 	}
-	if (buffer)
-	{
-		if (i == digits)
-		{
-			buffer = malloc(i + 1);
-			ft_memmove(buffer, file, i);
-			buffer[i] = '\0';
-			//call getnetline again
-		}
-		else
-		{
-			line = malloc(i + ft_strlen(buffer) + 2);
-			ft_memmove(line, buffer, ft_strlen(buffer));
-			ft_memmove(line + ft_strlen(buffer), file, i + 1);
-			line[i + ft_strlen(buffer) + 1] = '\0';
-		}
-	}
-	else
-	{
-		if (i == digits)
-		{
-			buffer = malloc(i + 1);
-			ft_memmove(buffer, file, i);
-			buffer[i] = '\0';
-			//call getnetline again
-		}
-		else
-		{
-			line = malloc(i + 2);
-			ft_memmove(line, file, i + 1);
-			line[i + 1] = '\0';
-		}
-	}
-
-
-	if (i < digits - 1)
-	{
-		buffer = malloc(digits - i + 1);
-		ft_memmove(buffer, file + i + 1, digits - i);
-		buffer[digits - i + 1] = '\0';
-	}
-
-	free(file);
+	line = get_buffer_line(buffer, eol);
 	return (line);
+}
+
+char	*set_buffer(char *buffer, char *file, int digits)
+{
+	char	*new_buffer;
+	int		buffer_len;
+
+	buffer_len = ft_strlen(buffer);
+	new_buffer = malloc(buffer_len + digits + 1);
+	ft_memcpy(new_buffer, buffer, buffer_len);
+	ft_memcpy((new_buffer + buffer_len), file, digits);
+	new_buffer[buffer_len + digits] = '\0';
+	free(buffer);
+	return (new_buffer);
+}
+
+char	*get_buffer_line(char *buffer, char *eol)
+{
+	char	*new_buffer;
+	int		new_buffer_len;
+
+	new_buffer_len = t_strlen(buffer) - (eol - buffer);
+	new_buffer = malloc(new_buffer_len + 1);
+	// copy from buffer to new
+	*(buffer + eol + 1) = '\0';
+	return (buffer);
 }
