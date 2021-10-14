@@ -6,7 +6,7 @@
 /*   By: dchaves- <dchaves-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:14:23 by dchaves-          #+#    #+#             */
-/*   Updated: 2021/10/12 15:14:23 by dchaves-         ###   ########.fr       */
+/*   Updated: 2021/10/14 19:29:04 by dchaves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,17 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	while (n-- && dest != src)
 		((unsigned char *)dest)[n] = ((unsigned char *)src)[n];
 	return (dest);
+}
+
+char	*ft_strdup(const char *s)
+{
+	char	*ptr;
+	size_t	size;
+
+	size = ft_strlen(s) + 1;
+	ptr = malloc(size);
+	if (!ptr)
+		return (0);
+	ft_memcpy(ptr, s, size);
+	return (ptr);
 }

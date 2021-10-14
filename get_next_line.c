@@ -6,7 +6,7 @@
 /*   By: dchaves- <dchaves-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:14:07 by dchaves-          #+#    #+#             */
-/*   Updated: 2021/10/13 03:12:37 by dchaves-         ###   ########.fr       */
+/*   Updated: 2021/10/14 19:33:58 by dchaves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,14 @@ char	*get_buffer_line(char **buffer, char *eol);
 
 char	*get_next_line(int fd)
 {
-	static char	**buffer;
+	static char	*buffer;
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
 	if (!buffer)
-	{
-		buffer = malloc(sizeof(char *));
-		if (!buffer)
-			return (NULL);
-		*buffer = malloc(sizeof(char));
-		if (!*buffer)
-			return (NULL);
-	}
-	line = get_line(fd, buffer);
+		buffer = ft_strdup("");
+	line = get_line(fd, &buffer);
 	if (!line)
 		free(buffer);
 	return (line);

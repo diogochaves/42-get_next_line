@@ -6,7 +6,7 @@
 /*   By: dchaves- <dchaves-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:14:31 by dchaves-          #+#    #+#             */
-/*   Updated: 2021/10/12 15:15:25 by dchaves-         ###   ########.fr       */
+/*   Updated: 2021/10/14 19:32:56 by dchaves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,14 @@ char	*ft_strchr(const char *s, int c);
  * @return A pointer to the memory area DEST.
  */
 void	*ft_memcpy(void *dest, const void *src, size_t n);
+
+/**
+ * @brief Duplicates the string S.
+ *
+ * @param s The string to duplicate.
+ * @return A pointer to the duplicated string. It returns NULL if insufficient
+ * memory was available.
+ */
+char	*ft_strdup(const char *s);
 
 #endif
