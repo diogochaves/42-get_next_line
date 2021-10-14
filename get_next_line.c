@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dchaves- <dchaves-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/12 15:14:07 by dchaves-          #+#    #+#             */
+/*   Updated: 2021/10/13 03:12:37 by dchaves-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 char	*get_line(int fd, char **buffer);
@@ -9,9 +21,11 @@ char	*get_next_line(int fd)
 	static char	**buffer;
 	char		*line;
 
+	if (fd < 0 || BUFFER_SIZE < 1)
+		return (NULL);
 	if (!buffer)
 	{
-		buffer = malloc(sizeof(char));
+		buffer = malloc(sizeof(char *));
 		if (!buffer)
 			return (NULL);
 		*buffer = malloc(sizeof(char));
@@ -37,7 +51,9 @@ char	*get_line(int fd, char **buffer)
 	{
 		digits = read(fd, file, BUFFER_SIZE);
 		if (!digits)
-			return (NULL); // EOF - ToDo: FREE ptr - WRONG
+		{
+			return (NULL);
+		}
 		*buffer = set_buffer(buffer, file, digits);
 		eol = ft_strchr(*buffer, '\n');
 	}
@@ -68,7 +84,6 @@ char	*get_buffer_line(char **buffer, char *eol)
 	temp = *buffer;
 	new_buffer_len = ft_strlen(*buffer) - (eol - *buffer);
 	new_buffer = malloc(new_buffer_len + 1);
-	// copy from buffer to new
 	new_buffer = ft_memcpy(new_buffer, eol + 1, new_buffer_len);
 	new_buffer[new_buffer_len] = '\0';
 	*(eol + 1) = '\0';

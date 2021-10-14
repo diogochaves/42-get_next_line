@@ -34,6 +34,10 @@ int	main(void)
 	printf("->%s", line_content);
 	line_content = get_next_line(fd);
 	printf("->%s", line_content);
+	line_content = get_next_line(fd);
+	printf("->%s", line_content);
+	line_content = get_next_line(fd);
+	printf("->%s", line_content);
 	printf("\n[END]\n");
 	return (0);
 }
