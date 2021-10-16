@@ -6,7 +6,7 @@
 /*   By: dchaves- <dchaves-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:14:07 by dchaves-          #+#    #+#             */
-/*   Updated: 2021/10/14 19:33:58 by dchaves-         ###   ########.fr       */
+/*   Updated: 2021/10/16 19:43:25 by dchaves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,13 @@ char	*get_next_line(int fd)
 		buffer = ft_strdup("");
 	line = get_line(fd, &buffer);
 	if (!line)
-		free(buffer);
+	{
+		if (buffer)
+		{
+			line = buffer;
+			buffer = 0;
+		}
+	}
 	return (line);
 }
 
