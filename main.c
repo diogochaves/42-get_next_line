@@ -26,18 +26,40 @@ int	main(void)
 	printf("\n[START]\n");
 	line_content = get_next_line(fd);
 	printf("->%s", line_content);
+	if (line_content == NULL)
+		printf("NULL");
+	free(line_content);
 	line_content = get_next_line(fd);
 	printf("->%s", line_content);
+	if (line_content == NULL)
+		printf("NULL");
+	free(line_content);
 	line_content = get_next_line(fd);
 	printf("->%s", line_content);
+	if (line_content == NULL)
+		printf("NULL");
+	free(line_content);
 	line_content = get_next_line(fd);
 	printf("->%s", line_content);
+	if (line_content == NULL)
+		printf("NULL");
+	free(line_content);
 	line_content = get_next_line(fd);
 	printf("->%s", line_content);
+	if (line_content == NULL)
+		printf("NULL");
+	free(line_content);
 	line_content = get_next_line(fd);
 	printf("->%s", line_content);
+	if (line_content == NULL)
+		printf("NULL");
+	free(line_content);
 	line_content = get_next_line(fd);
 	printf("->%s", line_content);
+	if (line_content == NULL)
+		printf("NULL");
+	free(line_content);
 	printf("\n[END]\n");
+
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: dchaves- <dchaves-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:14:07 by dchaves-          #+#    #+#             */
-/*   Updated: 2021/10/16 19:43:25 by dchaves-         ###   ########.fr       */
+/*   Updated: 2021/10/16 21:49:52 by dchaves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,22 @@ char	*get_next_line(int fd)
 	static char	*buffer;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE < 1)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (!buffer)
 		buffer = ft_strdup("");
 	line = get_line(fd, &buffer);
-	if (!line)
+	if (!line && buffer)
 	{
-		if (buffer)
+		if (ft_strlen(buffer) > 0)
 		{
 			line = buffer;
-			buffer = 0;
+			buffer = NULL;
+		}
+		else
+		{
+			free(buffer);
+			buffer = NULL;
 		}
 	}
 	return (line);
@@ -51,12 +56,14 @@ char	*get_line(int fd, char **buffer)
 		digits = read(fd, file, BUFFER_SIZE);
 		if (!digits)
 		{
+			free(file);
 			return (NULL);
 		}
 		*buffer = set_buffer(buffer, file, digits);
 		eol = ft_strchr(*buffer, '\n');
 	}
 	line = get_buffer_line(buffer, eol);
+	free(file);
 	return (line);
 }
 
@@ -71,6 +78,7 @@ char	*set_buffer(char **buffer, char *file, int digits)
 	ft_memcpy((new_buffer + buffer_len), file, digits);
 	new_buffer[buffer_len + digits] = '\0';
 	free(*buffer);
+	*buffer = NULL;
 	return (new_buffer);
 }
 
