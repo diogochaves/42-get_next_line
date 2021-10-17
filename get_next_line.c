@@ -6,15 +6,15 @@
 /*   By: dchaves- <dchaves-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:14:07 by dchaves-          #+#    #+#             */
-/*   Updated: 2021/10/17 15:59:54 by dchaves-         ###   ########.fr       */
+/*   Updated: 2021/10/17 16:24:27 by dchaves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*read_line(int fd, char **buffer);
-char	*set_buffer(char *buffer, char *file);
-char	*read_buffer(char **buffer, char *eol, int size);
+static char	*read_line(int fd, char **buffer);
+static char	*set_buffer(char *buffer, char *file);
+static char	*read_buffer(char **buffer, char *eol, int size);
 
 char	*get_next_line(int fd)
 {
@@ -29,13 +29,15 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-char	*read_line(int fd, char **buffer)
+static char	*read_line(int fd, char **buffer)
 {
 	char	*file;
 	char	*line;
 	int		size;
 
 	file = malloc(BUFFER_SIZE + 1);
+	if (!file)
+		return (NULL);
 	size = 1;
 	while (!ft_strchr(*buffer, '\n') && size > 0)
 	{
@@ -51,7 +53,7 @@ char	*read_line(int fd, char **buffer)
 	return (line);
 }
 
-char	*set_buffer(char *buffer, char *file)
+static char	*set_buffer(char *buffer, char *file)
 {
 	char	*new_buffer;
 
@@ -61,7 +63,7 @@ char	*set_buffer(char *buffer, char *file)
 	return (new_buffer);
 }
 
-char	*read_buffer(char **buffer, char *eol, int size)
+static char	*read_buffer(char **buffer, char *eol, int size)
 {
 	char	*line;
 
