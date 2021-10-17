@@ -6,7 +6,7 @@
 /*   By: dchaves- <dchaves-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:14:31 by dchaves-          #+#    #+#             */
-/*   Updated: 2021/10/14 19:32:56 by dchaves-         ###   ########.fr       */
+/*   Updated: 2021/10/17 15:19:47 by dchaves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,27 @@ void	*ft_memcpy(void *dest, const void *src, size_t n);
  * memory was available.
  */
 char	*ft_strdup(const char *s);
+
+/**
+ * @brief Appends the NUL-terminated string SRC to the end of DST. It will
+ * append at most (SIZE - strlen(DST) - 1 byte), NUL-terminating the result.
+ *
+ * @param dst The pointer to the memory area DST.
+ * @param src The pointer to the memory area SCR.
+ * @param size The quantity of bytes to append.
+ * @return The total length of the string it tried to create (the initial
+ * length of DST plus the length of SRC).
+ */
+size_t	ft_strlcat(char *dst, const char *src, size_t size);
+
+/**
+ * @brief Allocates and returns a new string, which is the result of the
+ * concatenation of S1 and S2.
+ *
+ * @param s1 The prefix string.
+ * @param s2 The suffix string.
+ * @return The new string. NULL if the allocation fails.
+ */
+char	*ft_strjoin(char const *s1, char const *s2);
 
 #endif

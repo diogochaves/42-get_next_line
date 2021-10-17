@@ -6,15 +6,15 @@
 /*   By: dchaves- <dchaves-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:14:07 by dchaves-          #+#    #+#             */
-/*   Updated: 2021/10/16 21:49:52 by dchaves-         ###   ########.fr       */
+/*   Updated: 2021/10/17 15:59:54 by dchaves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*get_line(int fd, char **buffer);
-char	*set_buffer(char **buffer, char *file, int digits);
-char	*get_buffer_line(char **buffer, char *eol);
+char	*read_line(int fd, char **buffer);
+char	*set_buffer(char *buffer, char *file);
+char	*read_buffer(char **buffer, char *eol, int size);
 
 char	*get_next_line(int fd)
 {
@@ -25,75 +25,60 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (!buffer)
 		buffer = ft_strdup("");
-	line = get_line(fd, &buffer);
-	if (!line && buffer)
-	{
-		if (ft_strlen(buffer) > 0)
-		{
-			line = buffer;
-			buffer = NULL;
-		}
-		else
-		{
-			free(buffer);
-			buffer = NULL;
-		}
-	}
+	line = read_line(fd, &buffer);
 	return (line);
 }
 
-char	*get_line(int fd, char **buffer)
+char	*read_line(int fd, char **buffer)
 {
-	char	*eol;
 	char	*file;
 	char	*line;
-	int		digits;
+	int		size;
 
-	file = malloc(BUFFER_SIZE);
-	eol = ft_strchr(*buffer, '\n');
-	while (!eol)
+	file = malloc(BUFFER_SIZE + 1);
+	size = 1;
+	while (!ft_strchr(*buffer, '\n') && size > 0)
 	{
-		digits = read(fd, file, BUFFER_SIZE);
-		if (!digits)
+		size = read(fd, file, BUFFER_SIZE);
+		if (size > 0)
 		{
-			free(file);
-			return (NULL);
+			file[size] = '\0';
+			*buffer = set_buffer(*buffer, file);
 		}
-		*buffer = set_buffer(buffer, file, digits);
-		eol = ft_strchr(*buffer, '\n');
 	}
-	line = get_buffer_line(buffer, eol);
+	line = read_buffer(buffer, ft_strchr(*buffer, '\n'), size);
 	free(file);
 	return (line);
 }
 
-char	*set_buffer(char **buffer, char *file, int digits)
+char	*set_buffer(char *buffer, char *file)
 {
 	char	*new_buffer;
-	int		buffer_len;
 
-	buffer_len = ft_strlen(*buffer);
-	new_buffer = malloc(buffer_len + digits + 1);
-	ft_memcpy(new_buffer, *buffer, buffer_len);
-	ft_memcpy((new_buffer + buffer_len), file, digits);
-	new_buffer[buffer_len + digits] = '\0';
-	free(*buffer);
-	*buffer = NULL;
+	new_buffer = ft_strjoin(buffer, file);
+	free(buffer);
+	buffer = NULL;
 	return (new_buffer);
 }
 
-char	*get_buffer_line(char **buffer, char *eol)
+char	*read_buffer(char **buffer, char *eol, int size)
 {
-	char	*temp;
-	char	*new_buffer;
-	int		new_buffer_len;
+	char	*line;
 
-	temp = *buffer;
-	new_buffer_len = ft_strlen(*buffer) - (eol - *buffer);
-	new_buffer = malloc(new_buffer_len + 1);
-	new_buffer = ft_memcpy(new_buffer, eol + 1, new_buffer_len);
-	new_buffer[new_buffer_len] = '\0';
-	*(eol + 1) = '\0';
-	*buffer = new_buffer;
-	return (temp);
+	line = *buffer;
+	if (size > 0)
+	{
+		*buffer = ft_strdup(eol + 1);
+		*(eol + 1) = '\0';
+	}
+	else
+	{
+		if (ft_strlen(*buffer) == 0)
+		{
+			free(*buffer);
+			line = NULL;
+		}
+		*buffer = NULL;
+	}
+	return (line);
 }
