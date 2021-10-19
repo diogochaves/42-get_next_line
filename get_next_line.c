@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dchaves- <dchaves-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 15:14:07 by dchaves-          #+#    #+#             */
-/*   Updated: 2021/10/17 16:24:27 by dchaves-         ###   ########.fr       */
+/*   Updated: 2021/10/19 02:56:02 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static char	*read_line(int fd, char **buffer);
 static char	*set_buffer(char *buffer, char *file);
-static char	*read_buffer(char **buffer, char *eol, int size);
+static char	*read_buffer(char **buffer, char *new_line, int size);
 
 char	*get_next_line(int fd)
 {
@@ -63,15 +63,15 @@ static char	*set_buffer(char *buffer, char *file)
 	return (new_buffer);
 }
 
-static char	*read_buffer(char **buffer, char *eol, int size)
+static char	*read_buffer(char **buffer, char *new_line, int size)
 {
 	char	*line;
 
 	line = *buffer;
 	if (size > 0)
 	{
-		*buffer = ft_strdup(eol + 1);
-		*(eol + 1) = '\0';
+		*buffer = ft_strdup(new_line + 1);
+		*(new_line + 1) = '\0';
 	}
 	else
 	{
